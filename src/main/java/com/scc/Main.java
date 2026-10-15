@@ -160,9 +160,9 @@ public class Main {
         if(user != null){
             System.out.println("\n -> Welcome "+user.name()+ " | ROLE: "+user.role()+"");
             switch (user.role()){
-                case "ADMIN" : new AdminMenu(userDao, sc).display(user);
-                case "MANAGER" : new ManagerMenu(userDao, sc).display(user);
-                case "KITCHEN STAFF" : new KitchenStaffMenu(userDao, sc).display(user);
+                case "ADMIN" -> new AdminMenu(userDao, sc).display(user);
+                case "MANAGER" -> new ManagerMenu(userDao, sc).display(user);
+                case "KITCHEN STAFF" -> new KitchenStaffMenu(userDao, sc).display(user);
             }
         }
     }
