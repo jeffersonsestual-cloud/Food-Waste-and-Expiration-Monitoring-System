@@ -2,9 +2,11 @@ package com.scc.dao;
 
 import com.scc.model.User;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class UserDao {
 
@@ -178,4 +180,30 @@ public class UserDao {
             System.err.println("Error saving activity log: " + e.getMessage());
         }
     }
+    public boolean updateUserAndStatus (int userId, String newRoles , String newStatus ) {
+
+        String sql = "UPDATE users SET role = ?, status = ? WHERE user_id = ?";
+        try (
+                Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newRoles.toUpperCase());
+            pstmt.setString(2, newStatus.toUpperCase());
+            pstmt.setInt(3, userId);
+
+            int rowsUpDated = pstmt.executeUpdate();
+            if (rowsUpDated > 0) {
+                System.out.println(" -> User ID: " + userId + "updated successfully!");
+                return true;
+
+            } else {
+                System.out.println(" -> Users ID not found.");
+            }
+            return false;
+        } catch (SQLException e) {
+            System.err.println("Error Updating user: " + e.getMessage());
+        }
+        return false;
+    }
+
 }
